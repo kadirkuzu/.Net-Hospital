@@ -2,10 +2,10 @@
 
 namespace Hospital.Models
 {
-    public class MedicalDepartment : BaseEntity
+    public class Department : BaseEntity
     {
         public string Name { get; set; }
-        public MedicalDepartment(string name)
+        public Department(string name)
         {
             Name = name;
         }

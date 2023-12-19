@@ -1,7 +1,7 @@
 ﻿using Hospital.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hospital.API.Data.Contexts
+namespace Hospital.API.Repositories.Concrete
 {
     public class HospitalDbContext : DbContext
     {
@@ -9,7 +9,7 @@ namespace Hospital.API.Data.Contexts
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<MedicalDepartment> MedicalDepartments { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
     }
