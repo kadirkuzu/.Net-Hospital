@@ -1,6 +1,7 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,7 +21,7 @@ namespace Hospital.API.Controllers
         [HttpGet]
         public IEnumerable<Clinic> Get()
         {
-            return _clinicService.GetAll();
+            return _clinicService.GetAll().Include(x=>x.Department);
         }
 
         // GET api/<ClinicController>/5
