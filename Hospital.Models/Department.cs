@@ -8,6 +8,15 @@ namespace Hospital.Models
         public Department(string name)
         {
             Name = name;
+            CreatedDate = DateTime.Now;
+            UpdatedDate = DateTime.Now;
+        }
+        public Department(Guid id ,string name)
+        {
+            Name = name;
+            CreatedDate = DateTime.Now;
+            UpdatedDate = DateTime.Now;
+            Id = id;
         }
     }
 }

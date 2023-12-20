@@ -19,37 +19,59 @@ namespace Hospital.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Clinic> Get()
+        public IEnumerable<Clinic> GetAll()
         {
             return _clinicService.GetAll().Include(x=>x.Department);
         }
 
-        // GET api/<ClinicController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var clinic = await _clinicService.GetAsync(id);
+            var clinic = await _clinicService.AsNoTracking().Include(x => x.Doctors).Include(x=>x.Department).FirstOrDefaultAsync(data => data.Id == id);
             return clinic == null ? NotFound() : Ok(clinic);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Clinic clinic)
+        public async Task<IActionResult> Post([FromBody] AddClinicRequest request )
         {
+            var clinic = new Clinic(request.Name,request.DepartmentId);
             await _clinicService.AddAsync(clinic);
             await _clinicService.SaveAsync();
             return Ok(clinic);
         }
 
-        // PUT api/<ClinicController>/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid? id, [FromBody] Clinic updateClinic)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var clinic = await _clinicService.GetAsync((Guid)id);
+            if (clinic == null)
+            {
+                return NotFound();
+            }
+            clinic = updateClinic;
+            return Ok(clinic);
         }
 
-        // DELETE api/<ClinicController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var clinic = await _clinicService.AsNoTracking().Include(x=>x.Doctors).FirstOrDefaultAsync(data=>data.Id == id) ;
+            if(clinic == null) return NotFound();
+            if (clinic.Doctors.Count > 0)
+            {
+                return NotFound("There are doctors working in the clinic. Remove them remove clinic.");
+            }
+            _clinicService.Remove(clinic);
+            await _clinicService.SaveAsync();
+            return Ok(clinic.Id);
         }
     }
 }

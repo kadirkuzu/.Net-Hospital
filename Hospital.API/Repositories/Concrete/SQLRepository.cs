@@ -21,6 +21,10 @@ namespace Hospital.API.Repositories.Concrete
         {
             return Table;
         }
+        public IQueryable<T> AsNoTracking()
+        {
+            return Table.AsNoTracking();
+        }
         public IQueryable<T> FindAll(Expression<Func<T, bool>> method)
         {
             return Table.Where(method);

@@ -6,6 +6,7 @@ namespace Hospital.API.Repositories.Abstract
     public interface ISQLRepository<T> : IRepository<T> where T : BaseEntity
     {
         IQueryable<T> GetAll();
+        IQueryable<T> AsNoTracking();
         IQueryable<T> FindAll(Expression<Func<T, bool>> method);
         Task<T> GetAsync(Guid id);
         Task<T> FindAsync(Expression<Func<T, bool>> method);

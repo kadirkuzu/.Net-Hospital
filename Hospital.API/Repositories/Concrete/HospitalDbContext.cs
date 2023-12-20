@@ -12,5 +12,11 @@ namespace Hospital.API.Repositories.Concrete
         public DbSet<Department> Departments { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Clinic>().HasData(SeedData.SeedClinics);
+            modelBuilder.Entity<Department>().HasData(SeedData.SeedDepartments);
+        }
     }
 }
