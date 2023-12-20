@@ -5,6 +5,7 @@ namespace Hospital.Models
     public class Department : BaseEntity
     {
         public string Name { get; set; }
+        public ICollection<Clinic>? Clinics { get; set; }
         public Department(string name)
         {
             Name = name;

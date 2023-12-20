@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Hospital.Models;
 using Hospital.API.Repositories.Abstract;
 using Hospital.API.Services.Abstract;
+using Azure.Core;
+using Hospital.API.Services.Concrete;
 
 namespace Hospital.API.Controllers
 {
@@ -11,16 +13,21 @@ namespace Hospital.API.Controllers
     public class Doctors : ControllerBase
     {
         private readonly IDoctorService _doctorService;
+        private readonly IClinicService _clinicService;
 
-        public Doctors(IDoctorService doctorService)
+        public Doctors(IDoctorService doctorService , IClinicService clinicService)
         {
             _doctorService = doctorService;
+            _clinicService = clinicService ;
         }
 
         [HttpGet("")]
-        public IEnumerable<Doctor> GetAll()
+        public IEnumerable<DoctorDto> GetAll()
         {
-            return _doctorService.GetAll();
+            return _doctorService.GetAll()
+                .Include(x=>x.Clinic)
+                .Include(x=>x.WorkSchedules)
+                .Select(x=> new DoctorDto(x));
         }
 
         [HttpGet("id")]
@@ -31,8 +38,14 @@ namespace Hospital.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Doctor doctor)
+        public async Task<IActionResult> Post([FromBody] AddDoctorRequest request)
         {
+            var clinic = await _clinicService.GetAsync(request.ClinicId);
+            if (clinic == null)
+            {
+                return NotFound("Clinic is not found");
+            }
+            var doctor = new Doctor(request);
             await _doctorService.AddAsync(doctor);
             await _doctorService.SaveAsync();
             return Ok(doctor);

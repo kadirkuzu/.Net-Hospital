@@ -12,16 +12,21 @@ namespace Hospital.API.Controllers
     public class Clinics : ControllerBase
     {
         private readonly IClinicService _clinicService;
+        private readonly IDepartmentService _departmentService;
 
-        public Clinics(IClinicService clinicService)
+        public Clinics(IClinicService clinicService , IDepartmentService departmentService)
         {
             _clinicService = clinicService;
+            _departmentService = departmentService;
         }
 
         [HttpGet]
-        public IEnumerable<Clinic> GetAll()
+        public IEnumerable<ClinicDto> GetAll()
         {
-            return _clinicService.GetAll().Include(x=>x.Department);
+                return _clinicService.GetAll()
+                    .Include(x => x.Department)
+                    .Include(x=>x.Doctors)
+                    .Select(x=>new ClinicDto(x));
         }
 
         [HttpGet("{id}")]
@@ -34,9 +39,15 @@ namespace Hospital.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddClinicRequest request )
         {
+            var department = await _departmentService.GetAsync(request.DepartmentId);
+            if(department == null)
+            {
+                return NotFound("Department is not found");
+            }
             var clinic = new Clinic(request.Name,request.DepartmentId);
             await _clinicService.AddAsync(clinic);
             await _clinicService.SaveAsync();
+            clinic.Department = department;
             return Ok(clinic);
         }
 
