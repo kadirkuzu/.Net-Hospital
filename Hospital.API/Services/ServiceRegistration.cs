@@ -13,6 +13,7 @@ namespace Hospital.API.Services
             services.AddScoped<IDoctorService,DoctorService>();
             services.AddScoped<IClinicService,ClinicService>();
             services.AddScoped<IDepartmentService,DepartmentService>();
+            services.AddScoped<IAppointmentService,AppointmentService>();
         }
     }
 }

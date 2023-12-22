@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hospital.Models;
-using Hospital.API.Repositories.Abstract;
 using Hospital.API.Services.Abstract;
-using Azure.Core;
-using Hospital.API.Services.Concrete;
 
 namespace Hospital.API.Controllers
 {
@@ -14,11 +11,13 @@ namespace Hospital.API.Controllers
     {
         private readonly IDoctorService _doctorService;
         private readonly IClinicService _clinicService;
+        private readonly IAppointmentService _appointmentService;
 
-        public Doctors(IDoctorService doctorService , IClinicService clinicService)
+        public Doctors(IDoctorService doctorService , IClinicService clinicService , IAppointmentService appointmentService)
         {
-            _doctorService = doctorService;
+            _doctorService = doctorService ;
             _clinicService = clinicService ;
+            _appointmentService = appointmentService ;
         }
 
         [HttpGet("")]
@@ -57,8 +56,22 @@ namespace Hospital.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var doctor = await _doctorService.AsNoTracking().FirstOrDefaultAsync(data => data.Id == id);
+            if (doctor == null) return NotFound();
+            var anyAppointment = await _appointmentService.GetAll().AnyAsync(x=>x.DoctorId == id);
+            if (anyAppointment)
+            {
+                return NotFound("The doctor have appointments. Remove them to remove doctor.");
+            }
+            _doctorService.Remove(doctor);
+            await _clinicService.SaveAsync();
+            return Ok(id);
         }
     }
 }
