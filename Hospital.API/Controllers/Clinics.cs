@@ -1,9 +1,9 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
+using Hospital.Models.Hospital.RequestDto;
+using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hospital.API.Controllers
 {
@@ -21,12 +21,12 @@ namespace Hospital.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ClinicDto> GetAll()
+        public IEnumerable<ClinicResponseDto> GetAll()
         {
                 return _clinicService.GetAll()
                     .Include(x => x.Department)
                     .Include(x=>x.Doctors)
-                    .Select(x=>new ClinicDto(x));
+                    .Select(x=>new ClinicResponseDto(x));
         }
 
         [HttpGet("{id}")]
@@ -37,7 +37,7 @@ namespace Hospital.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AddClinicRequest request )
+        public async Task<IActionResult> Post([FromBody] AddClinicRequestDto request )
         {
             var department = await _departmentService.GetAsync(request.DepartmentId);
             if(department == null)
@@ -75,14 +75,17 @@ namespace Hospital.API.Controllers
                 return NotFound();
             }
             var clinic = await _clinicService.AsNoTracking().Include(x=>x.Doctors).FirstOrDefaultAsync(data=>data.Id == id) ;
-            if(clinic == null) return NotFound();
-            if (clinic.Doctors.Count > 0)
+            if(clinic != null)
             {
-                return NotFound("There are doctors working in the clinic. Remove them remove clinic.");
+                if (clinic!.Doctors?.Count > 0)
+                {
+                    return NotFound("There are doctors working in the clinic. Remove them remove clinic.");
+                }
+                _clinicService.Remove(clinic);
+                await _clinicService.SaveAsync();
+                return Ok(clinic.Id);
             }
-            _clinicService.Remove(clinic);
-            await _clinicService.SaveAsync();
-            return Ok(clinic.Id);
+            return NotFound();
         }
     }
 }

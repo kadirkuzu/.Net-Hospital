@@ -21,26 +21,4 @@ namespace Hospital.Models
             DepartmentId = departmentId;
         }
     }
-    public class AddClinicRequest
-    {
-           public string Name { get; set; }
-           public Guid DepartmentId { get; set; }
-    }
-    public class ClinicDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public Guid DepartmentId { get; set; }
-        public string DepartmentName { get; set; }
-        public IEnumerable<DoctorDto> Doctors { get; set; }
-
-        public ClinicDto(Clinic clinic)
-        {
-            Id = clinic.Id;
-            Name=clinic.Name;
-            DepartmentId = clinic.Department!.Id;
-            DepartmentName = clinic.Name;
-            Doctors = clinic.Doctors?.Select(x=> new DoctorDto(x)) ?? new List<DoctorDto>();
-        }
-    }
 }
