@@ -1,9 +1,10 @@
 ﻿using Hospital.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hospital.API.Repositories.Concrete
 {
-    public class HospitalDbContext : DbContext
+    public class HospitalDbContext : IdentityDbContext<Admin>
     {
         public HospitalDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Appointment> Appointments { get; set; }
@@ -15,6 +16,7 @@ namespace Hospital.API.Repositories.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Clinic>().HasData(SeedData.SeedClinics);
             modelBuilder.Entity<Department>().HasData(SeedData.SeedDepartments);
         }

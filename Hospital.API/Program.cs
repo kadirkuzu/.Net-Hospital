@@ -27,6 +27,7 @@ using (var scope = app.Services.CreateScope())
     {
         var dbContext = services.GetRequiredService<HospitalDbContext>();
         dbContext.Database.Migrate();
+        await ServiceRegistration.InitializeRolesAsync(services);
     }
     catch (Exception ex)
     {
@@ -41,6 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

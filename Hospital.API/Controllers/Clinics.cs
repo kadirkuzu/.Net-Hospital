@@ -1,7 +1,8 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
-using Hospital.Models.Hospital.RequestDto;
+using Hospital.Models.Hospital.RequestDto.Clinic;
 using Hospital.Models.Hospital.ResponseDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ namespace Hospital.API.Controllers
             _clinicService = clinicService;
             _departmentService = departmentService;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IEnumerable<ClinicResponseDto> GetAll()
         {
@@ -36,6 +37,7 @@ namespace Hospital.API.Controllers
             return clinic == null ? NotFound() : Ok(clinic);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddClinicRequestDto request )
         {
@@ -51,6 +53,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid? id, [FromBody] Clinic updateClinic)
         {
@@ -67,6 +70,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid? id)
         {
