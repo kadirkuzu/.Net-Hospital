@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Hospital.Models;
 using Hospital.API.Services.Abstract;
+using Hospital.Models.Hospital.ResponseDto;
+using Hospital.Models.Hospital.RequestDto.Doctor;
 
 namespace Hospital.API.Controllers
 {
@@ -21,12 +23,12 @@ namespace Hospital.API.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<DoctorDto> GetAll()
+        public IEnumerable<GetDoctorResponseDto> GetAll()
         {
             return _doctorService.GetAll()
                 .Include(x=>x.Clinic)
                 .Include(x=>x.WorkSchedules)
-                .Select(x=> new DoctorDto(x));
+                .Select(x=> new GetDoctorResponseDto(x));
         }
 
         [HttpGet("id")]
@@ -37,7 +39,7 @@ namespace Hospital.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AddDoctorRequest request)
+        public async Task<IActionResult> Post([FromBody] AddDoctorRequestDto request)
         {
             var clinic = await _clinicService.GetAsync(request.ClinicId);
             if (clinic == null)

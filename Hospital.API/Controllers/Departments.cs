@@ -1,13 +1,13 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hospital.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/departments")]
     [ApiController]
     public class Departments : ControllerBase
     {
@@ -18,13 +18,14 @@ namespace Hospital.API.Controllers
             _departmentService = departmentService;
         }
 
+        [Authorize]
         [HttpGet]
-        public IEnumerable<Department> Get()
+        public IEnumerable<Department> GetAll()
         {
             return _departmentService.GetAll().Include(x=>x.Clinics);
         }
 
-        // GET api/<Departmens>/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -32,7 +33,7 @@ namespace Hospital.API.Controllers
             return department == null ? NotFound() : Ok(department);
         }
 
-        // POST api/<Departmens>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Department department)
         {
@@ -41,16 +42,36 @@ namespace Hospital.API.Controllers
             return Ok(department);
         }
 
-        // PUT api/<Departmens>/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] Department updateDepartment)
         {
+            var department = await _departmentService.GetAsync(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            department = updateDepartment;
+            return Ok(department);
         }
 
-        // DELETE api/<Departmens>/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            var department = await _departmentService.AsNoTracking().Include(x => x.Clinics).FirstOrDefaultAsync(data => data.Id == id);
+
+            if (department != null)
+            {
+                if (department!.Clinics?.Count > 0)
+                {
+                    return NotFound("There are clinics in the department. Remove them remove department.");
+                }
+                _departmentService.Remove(department);
+                await _departmentService.SaveAsync();
+                return Ok(department.Id);
+            }
+            return NotFound();
         }
     }
 }

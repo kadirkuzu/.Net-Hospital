@@ -25,22 +25,20 @@ namespace Hospital.API.Services
         }
         public static async Task InitializeRolesAsync(IServiceProvider serviceProvider)
         {
-            using (var serviceScope = serviceProvider.CreateScope())
+            using var serviceScope = serviceProvider.CreateScope();
+            var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            // Define your roles here
+            var roles = new[] { "Patient", "Admin" };
+
+            foreach (var role in roles)
             {
-                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleExists = await roleManager.RoleExistsAsync(role);
 
-                // Define your roles here
-                var roles = new[] { "TEST", "ADMIN" };
-
-                foreach (var role in roles)
+                if (!roleExists)
                 {
-                    var roleExists = await roleManager.RoleExistsAsync(role);
-
-                    if (!roleExists)
-                    {
-                        // Create the role if it doesn't exist
-                        await roleManager.CreateAsync(new IdentityRole(role));
-                    }
+                    // Create the role if it doesn't exist
+                    await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
         }

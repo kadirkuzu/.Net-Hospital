@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Hospital.Models;
 using Hospital.Models.Hospital.RequestDto.Account;
+using Hospital.Models.Common;
 
 namespace Hospital.API.Controllers
 {
@@ -20,18 +21,18 @@ namespace Hospital.API.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string accountType, [FromBody] RegisterRequestDto model)
+        public async Task<IActionResult> Register(AccountType accountType, [FromBody] RegisterRequestDto model)
         {
             var user = new Admin { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                var roleResult = await _userManager.AddToRoleAsync(user, accountType);
+                var roleResult = await _userManager.AddToRoleAsync(user, accountType.ToString());
 
                 if (roleResult.Succeeded)
                 {
-                    return Ok(new { Message = "Registration successful", Email = model.Email, Role = accountType });
+                    return Ok(new { Message = "Registration successful", Email = model.Email, Role = accountType.ToString() });
                 }
                 else
                 {
@@ -46,27 +47,21 @@ namespace Hospital.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        public async Task<IActionResult> Login(AccountType accountType, [FromBody] LoginRequestDto model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
 
-                if (result.Succeeded)
-                {
-                    return Ok(new { Message = "Login successful", Email = model.Email });
-                }
-                else
-                {
-                    return BadRequest(new { Message = "Login failed", Errors = "Invalid login attempt" });
-                }
+            if (result.Succeeded){
+                return Ok(new { Message = "Login successful", Email = model.Email });
+            }
+            else {
+                return BadRequest(new { Message = "Login failed", Errors = "Invalid login attempt" });
             }
 
-            return BadRequest(new { Message = "Invalid model state" });
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(AccountType accountType)
         {
             await _signInManager.SignOutAsync();
             return Ok(new { Message = "Logout successful" });
