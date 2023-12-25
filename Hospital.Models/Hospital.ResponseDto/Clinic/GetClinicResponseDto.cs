@@ -16,5 +16,9 @@
             DepartmentName = clinic.Name;
             Doctors = clinic.Doctors?.Select(x => new GetDoctorResponseDto(x)) ?? new List<GetDoctorResponseDto>();
         }
+        public GetClinicResponseDto()
+        {
+            
+        }
     }
 }

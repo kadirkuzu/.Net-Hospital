@@ -62,12 +62,12 @@ namespace Hospital.API.Controllers
         }
 
         [HttpGet("loggedId")]
-        public Guid? GetLoggedId(AccountType accountType)
+        public ValueDto? GetLoggedId(AccountType accountType)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                return Guid.Parse(userId);
+                return new ValueDto(userId) ;
             }
             else
             {

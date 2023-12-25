@@ -1,5 +1,6 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
+using Hospital.Models.Common;
 using Hospital.Models.Hospital.RequestDto.Clinic;
 using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace Hospital.API.Controllers
             _departmentService = departmentService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IEnumerable<GetClinicResponseDto> GetAll()
         {
@@ -31,15 +32,15 @@ namespace Hospital.API.Controllers
                     .Select(x=>new GetClinicResponseDto(x));
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var clinic = await _clinicService.AsNoTracking().Include(x => x.Doctors).Include(x=>x.Department).FirstOrDefaultAsync(data => data.Id == id);
-            return clinic == null ? NotFound() : Ok(clinic);
+            return clinic == null ? NotFound() : Ok(new GetClinicResponseDto(clinic));
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddClinicRequestDto request )
         {
@@ -55,7 +56,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid? id, [FromBody] Clinic updateClinic)
         {
@@ -72,7 +73,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -89,7 +90,7 @@ namespace Hospital.API.Controllers
                 }
                 _clinicService.Remove(clinic);
                 await _clinicService.SaveAsync();
-                return Ok(clinic.Id);
+                return Ok(new ValueDto(clinic.Id)) ;
             }
             return NotFound();
         }

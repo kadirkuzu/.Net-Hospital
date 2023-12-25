@@ -4,6 +4,7 @@ using Hospital.Models;
 using Hospital.API.Services.Abstract;
 using Hospital.Models.Hospital.ResponseDto;
 using Hospital.Models.Hospital.RequestDto.Doctor;
+using Hospital.API.Services.Concrete;
 
 namespace Hospital.API.Controllers
 {
@@ -53,8 +54,19 @@ namespace Hospital.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateDoctorRequestDto request)
         {
+            var doctor = await _doctorService.GetAsync(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+            doctor.Name = request.Name;
+            doctor.Surname = request.Surname;
+            doctor.Phone = request.Phone;
+            doctor.Email = request.Email;
+            await _doctorService.SaveAsync();
+            return Ok(doctor);
         }
 
         [HttpDelete("{id}")]
