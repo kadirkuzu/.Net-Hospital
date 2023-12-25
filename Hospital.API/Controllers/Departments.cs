@@ -1,5 +1,6 @@
 ﻿using Hospital.API.Services.Abstract;
 using Hospital.Models;
+using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,9 @@ namespace Hospital.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<GetDepartmentResponseDto> GetAll()
         {
-            return _departmentService.GetAll().Include(x=>x.Clinics);
+            return _departmentService.GetAll().Include(x => x.Clinics)!.ThenInclude(x => x.Doctors).Select(x => new GetDepartmentResponseDto(x));
         }
 
         [Authorize]
@@ -35,8 +36,13 @@ namespace Hospital.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Department department)
+        public async Task<IActionResult> Post([FromBody] string departmentName)
         {
+            var departmentIsAvailable = _departmentService.FindAsync(x=>x.Name == departmentName);
+            if (departmentIsAvailable != null) {
+                return NotFound("Department is available");    
+            }
+            var department = new Department(departmentName);
             await _departmentService.AddAsync(department);
             await _departmentService.SaveAsync();
             return Ok(department);

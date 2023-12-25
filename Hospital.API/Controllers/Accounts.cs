@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hospital.Models;
 using Hospital.Models.Hospital.RequestDto.Account;
 using Hospital.Models.Common;
+using System.Security.Claims;
 
 namespace Hospital.API.Controllers
 {
@@ -60,9 +61,28 @@ namespace Hospital.API.Controllers
 
         }
 
+        [HttpGet("loggedId")]
+        public Guid? GetLoggedId(AccountType accountType)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != null)
+            {
+                return Guid.Parse(userId);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(AccountType accountType)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(userId == null)
+            {
+                return NotFound();
+            }
             await _signInManager.SignOutAsync();
             return Ok(new { Message = "Logout successful" });
         }
