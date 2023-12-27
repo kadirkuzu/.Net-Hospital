@@ -22,7 +22,7 @@ namespace Hospital.API.Controllers
             _departmentService = departmentService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IEnumerable<GetClinicResponseDto> GetAll()
         {
@@ -32,7 +32,7 @@ namespace Hospital.API.Controllers
                     .Select(x=>new GetClinicResponseDto(x));
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -40,7 +40,7 @@ namespace Hospital.API.Controllers
             return clinic == null ? NotFound() : Ok(new GetClinicResponseDto(clinic));
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddClinicRequestDto request )
         {
@@ -56,7 +56,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid? id, [FromBody] Clinic updateClinic)
         {
@@ -73,7 +73,7 @@ namespace Hospital.API.Controllers
             return Ok(clinic);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid? id)
         {

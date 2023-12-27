@@ -1,9 +1,11 @@
 ﻿using Hospital.Models.Hospital.ResponseDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Hospital.MVC.Admin.Controllers
 {
+    [HospitalAuthorize]
     public class ClinicController : Controller
     {
         private readonly HttpClient http;

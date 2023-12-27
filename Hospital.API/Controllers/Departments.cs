@@ -5,6 +5,7 @@ using Hospital.Models.Hospital.RequestDto;
 using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -21,14 +22,14 @@ namespace Hospital.API.Controllers
             _departmentService = departmentService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IEnumerable<GetDepartmentResponseDto> GetAll()
         {
-            return _departmentService.GetAll().Include(x => x.Clinics)!.ThenInclude(x => x.Doctors).Select(x => new GetDepartmentResponseDto(x));
+            return _departmentService.GetAll().Include(x => x.Clinics)!.ThenInclude(x => x.Doctors).OrderByDescending(x=>x.CreatedDate).Select(x => new GetDepartmentResponseDto(x));
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -36,13 +37,13 @@ namespace Hospital.API.Controllers
             return department == null ? NotFound() : Ok(new GetDepartmentResponseDto(department));
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DepartmentRequestDto departmentRequest)
         {
-            var departmentIsAvailable = _departmentService.FindAsync(x=>x.Name == departmentRequest.Name);
+            var departmentIsAvailable = await _departmentService.FindAsync(x=>x.Name == departmentRequest.Name);
             if (departmentIsAvailable != null) {
-                return NotFound("Department is available");    
+                return BadRequest(new { Message = "Department already exists." });
             }
             var department = new Department(departmentRequest.Name);
             await _departmentService.AddAsync(department);
@@ -50,7 +51,7 @@ namespace Hospital.API.Controllers
             return Ok(department);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] DepartmentRequestDto departmentRequest)
         {
@@ -64,7 +65,7 @@ namespace Hospital.API.Controllers
             return Ok(department);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

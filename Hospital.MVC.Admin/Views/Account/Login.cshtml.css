@@ -1,0 +1,13 @@
+﻿#password {
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.password-button {
+    position: absolute;
+    background: #fff;
+    color: #6c757d;
+    right: 10px;
+    top: 6px;
+    cursor: pointer;
+}

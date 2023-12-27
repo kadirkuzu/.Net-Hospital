@@ -1,0 +1,50 @@
+﻿@using Hospital.Models.Hospital.RequestDto.Account;
+@model LoginRequestDto;
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="main-card">
+            <form asp-action="SendLogin">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email or Username</label>
+                    <input asp-for="Email" class="form-control" placeholder="Email or Username">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="w-100 position-relative">
+                        <input asp-for="Password" class="form-control" type="password" id="password" placeholder="Password" />
+                        <div class="password-button" onclick="togglePasswordVisibility()" id="passwordButton">
+                            show
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </div>
+            </form>
+            <div class="text-end mt-3">
+                Don't have an account?  <a class="router-text" asp-controller="Account" asp-action="Register">Register</a>
+            </div>
+            @if(ViewBag.Invalid ?? false){
+                <div class="alert alert-danger mt-3" role="alert">
+                    Invalid email or password !
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password');
+            passwordInput.type = passwordInput.type === 'text' ? 'password' : 'text';
+            var passwordButton = document.getElementById('passwordButton');
+            passwordButton.innerHTML = passwordButton.innerHTML == 'hide' ? 'show' : 'hide';
+        }
+    </script>
+}

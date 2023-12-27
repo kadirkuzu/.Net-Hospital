@@ -1,7 +1,11 @@
-﻿namespace Hospital.Models.Hospital.RequestDto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Hospital.Models.Hospital.RequestDto
 {
-    public record DepartmentRequestDto
-    (
-        string Name
-    );
+    public class DepartmentRequestDto
+    {
+        [Required]
+        [Display(Name="Department Name")]
+        public string Name { get; set; }
+    }
 }

@@ -1,11 +1,13 @@
-﻿using Hospital.Models;
+﻿using Azure.Core;
+using Hospital.Models.Common;
+using Hospital.Models.Hospital.RequestDto;
 using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Hospital.MVC.Admin.Controllers
 {
+    [HospitalAuthorize]
     public class DepartmentController : Controller
     {
         private readonly HttpClient http;
@@ -32,73 +34,38 @@ namespace Hospital.MVC.Admin.Controllers
             return View(departments);
         }
 
-        // GET: DepartmentController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: DepartmentController/Create
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: DepartmentController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> SendCreate(DepartmentRequestDto request)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var response = await http.PostAsJsonAsync("departments", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorObject = JsonConvert.DeserializeObject<dynamic>(errorContent);
+                    ViewBag.ErrorMessage = errorObject?.message;
+                    return View("Create");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Create");
         }
 
-        // GET: DepartmentController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Delete(DeleteRecord request)
         {
-            return View();
-        }
-
-        // POST: DepartmentController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var result =await http.DeleteAsync("departments/" + request.id);
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DepartmentController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: DepartmentController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("");
         }
     }
 }
