@@ -49,6 +49,11 @@ namespace Hospital.API.Controllers
             {
                 return NotFound("Department is not found");
             }
+            var clinicIsAvailable = await _clinicService.FindAsync(x => x.Name == request.Name && x.DepartmentId == request.DepartmentId);
+            if (clinicIsAvailable != null)
+            {
+                return BadRequest(new { Message = "Clinic already exists." });
+            }
             var clinic = new Clinic(request.Name,request.DepartmentId);
             await _clinicService.AddAsync(clinic);
             await _clinicService.SaveAsync();
@@ -58,18 +63,22 @@ namespace Hospital.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid? id, [FromBody] Clinic updateClinic)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateClinicRequestDto request)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var clinic = await _clinicService.GetAsync((Guid)id);
+            var clinic = await _clinicService.GetAsync(id);
+            var clinicIsAvailable = await _clinicService.FindAsync(x => x.Name == request.Name && x.DepartmentId == request.DepartmentId);
+
             if (clinic == null)
             {
-                return NotFound();
+                return BadRequest(new { Message = "Clinic not found." });
             }
-            clinic = updateClinic;
+            else if (clinicIsAvailable != null)
+            {
+                return BadRequest(new { Message = "Clinic already exists." });
+            }
+
+            clinic.Name = request.Name;
+            await _clinicService.SaveAsync();
             return Ok(clinic);
         }
 
@@ -86,7 +95,7 @@ namespace Hospital.API.Controllers
             {
                 if (clinic!.Doctors?.Count > 0)
                 {
-                    return NotFound("There are doctors working in the clinic. Remove them remove clinic.");
+                    return BadRequest(new { Message = "There are doctors working in the clinic. Remove them remove clinic." });
                 }
                 _clinicService.Remove(clinic);
                 await _clinicService.SaveAsync();

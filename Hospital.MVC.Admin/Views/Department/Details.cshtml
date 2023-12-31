@@ -1,0 +1,62 @@
+﻿@using Hospital.Models.Hospital.RequestDto.Clinic;
+@using Hospital.Models.Hospital.RequestDto;
+@model Hospital.Models.Hospital.ResponseDto.GetDepartmentResponseDto
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h4>Departments > @Model.Name</h4>
+    <form asp-controller="Clinic" asp-action="create" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-outline-secondary">
+            Add Clinic
+        </button>
+    </form>
+</div>
+
+<div class="main-card mt-4">
+    @if (Model.Clinics.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">
+                        Clinic Name
+                    </th>
+                    <th class="text-center" style="width: 20%;">
+                        Doctors
+                    </th>
+                    <th style="width: 60%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Clinics)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td class="text-center">
+                            @item.Doctors.Count()
+                        </td>
+                        <td class="text-end">
+                            @Html.ActionLink("Edit", "Edit","Clinic", new { id=item.Id , departmentId=Model.Id , Name=item.Name }) |
+                            @Html.ActionLink("Show Doctors", "Details","Clinic",  new  GetClinicRequestDto { Id = item.Id , DepartmentId = Model.Id }) |
+                            @Html.ActionLink("Delete", "Delete","Clinic", new RemoveClinicRequestDto(item.Id,Model.Id))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-dark" role="alert">
+            No clinic added yet
+        </div>
+    }
+
+</div>
+
+

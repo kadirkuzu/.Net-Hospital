@@ -9,7 +9,7 @@
         {
             Id = department.Id;
             Name = department.Name;
-            Clinics = department.Clinics != null ? department.Clinics.Select(x => new DepartmentClinic(x)) : new List<DepartmentClinic>();
+            Clinics = department.Clinics != null ? department.Clinics.OrderByDescending(x=>x.CreatedDate).Select(x => new DepartmentClinic(x)) : new List<DepartmentClinic>();
         }
         public GetDepartmentResponseDto()
         {

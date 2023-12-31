@@ -57,11 +57,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link link-title" asp-controller="clinic" asp-action="">
-                            Clinics
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link-title" asp-controller="clinic" asp-action="">
                             Doctors
                         </a>
                     </li>
@@ -76,17 +71,21 @@
                     @if (ViewContext.HttpContext.Request.Cookies["hospitalUserToken"] == null)
                     {
                         <li class="nav-item">
-                            <button class="btn btn-primary">
-                                <a class="text-white" asp-controller="Account" asp-action="Login">Login</a>
-                            </button>
+                            <form asp-controller="Account" asp-action="Login">
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+                            </form>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <button class="btn btn-danger">
-                                <a class="text-white" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </button>
+                            <form asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn btn-danger">
+                                    Logout
+                                </button>
+                            </form>
                         </li>
                     }
                 </ul>

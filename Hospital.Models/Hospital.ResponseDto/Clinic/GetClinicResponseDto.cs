@@ -13,7 +13,7 @@
             Id = clinic.Id;
             Name = clinic.Name;
             DepartmentId = clinic.Department!.Id;
-            DepartmentName = clinic.Name;
+            DepartmentName = clinic.Department.Name;
             Doctors = clinic.Doctors?.Select(x => new GetDoctorResponseDto(x)) ?? new List<GetDoctorResponseDto>();
         }
         public GetClinicResponseDto()

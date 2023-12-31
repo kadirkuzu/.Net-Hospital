@@ -1,5 +1,7 @@
-﻿using Hospital.Models.Hospital.ResponseDto;
-using Microsoft.AspNetCore.Authorization;
+﻿using Hospital.Models.Common;
+using Hospital.Models.Hospital.RequestDto;
+using Hospital.Models.Hospital.RequestDto.Clinic;
+using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,89 +17,89 @@ namespace Hospital.MVC.Admin.Controllers
             http = factory.CreateClient("httpClient");
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Create(Guid id)
         {
-            var response = await http.GetAsync("clinics");
-            IEnumerable<GetClinicResponseDto>? clinics;
+            ViewBag.departmentId = id;
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> SendCreate(AddClinicRequestDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await http.PostAsJsonAsync("clinics", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("details","department",new IDRecord (request.DepartmentId));
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorObject = JsonConvert.DeserializeObject<dynamic>(errorContent);
+                    TempData["ErrorMessage"] = errorObject?.message.ToString();
+                    return RedirectToAction("Create", new IDRecord(request.DepartmentId));
+                }
+            }
+            return RedirectToAction("Create", request.DepartmentId);
+        }
+
+        public async Task<ActionResult> Delete(RemoveClinicRequestDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await http.DeleteAsync("clinics/" + request.Id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorObject = JsonConvert.DeserializeObject<dynamic>(errorContent);
+                    TempData["ErrorMessage"] = errorObject?.message.ToString();
+                }
+            }
+            return RedirectToAction("details", "department", new IDRecord(request.DepartmentId));
+        }
+
+        public ActionResult Edit(UpdateClinicRequestDto request)
+        {
+            return View(request);
+        }
+        [HttpPost]
+        public async Task<ActionResult> SendEdit(UpdateClinicRequestDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await http.PutAsJsonAsync("clinics/" + request.Id, request);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("details", "department",new IDRecord(request.DepartmentId));
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorObject = JsonConvert.DeserializeObject<dynamic>(errorContent);
+                    ViewBag.ErrorMessage = errorObject?.message.ToString();
+                    return View("Edit", request);
+                }
+            }
+            return RedirectToAction("Edit");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Details(GetClinicRequestDto request)
+        {
+            var response = await http.GetAsync("clinics/" + request.Id);
+            var json = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
-                clinics = JsonConvert.DeserializeObject<List<GetClinicResponseDto>>(json);
+                var clinic = JsonConvert.DeserializeObject<GetClinicResponseDto>(json);
+                return View(clinic);
+
             }
             else
             {
-                clinics = Enumerable.Empty<GetClinicResponseDto>();
-                ModelState.AddModelError(string.Empty, "Error");
-            }
-            return View(clinics);
-        }
-
-        // GET: ClinicController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: ClinicController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ClinicController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClinicController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ClinicController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClinicController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ClinicController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                var errorObject = JsonConvert.DeserializeObject<dynamic>(json);
+                TempData["ErrorMessage"] = errorObject?.message.ToString();
+                return RedirectToAction("details", "department" , new IDRecord(request.DepartmentId));
             }
         }
     }

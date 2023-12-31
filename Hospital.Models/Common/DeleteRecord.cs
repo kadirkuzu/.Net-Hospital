@@ -1,5 +1,5 @@
 ﻿namespace Hospital.Models.Common
 {
-    public record DeleteRecord(Guid id);
+    public record IDRecord(Guid id);
 
 }

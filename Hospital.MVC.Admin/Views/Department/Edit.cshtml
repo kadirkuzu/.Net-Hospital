@@ -1,17 +1,18 @@
 ﻿@using Hospital.Models.Hospital.RequestDto.Department;
-@model AddDepartmentRequestDto;
+@model UpdateDepartmentRequestDto;
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-5">
         <div class="main-card">
-            <form asp-action="SendCreate">
+            <form asp-action="SendEdit">
+                <input type="hidden" asp-for="Id" />
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" placeholder="Department Name">
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-primary w-100">Add Department</button>
+                    <button type="submit" class="btn btn-primary w-100">Edit Department</button>
                 </div>
             </form>
-            @if (ViewBag.ErrorMessage!=null)
+            @if (ViewBag.ErrorMessage != null)
             {
                 <div class="alert alert-danger mt-3" role="alert">
                     @ViewBag.ErrorMessage

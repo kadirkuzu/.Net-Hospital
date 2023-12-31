@@ -2,6 +2,7 @@
 using Hospital.API.Services.Concrete;
 using Hospital.Models;
 using Hospital.Models.Hospital.RequestDto;
+using Hospital.Models.Hospital.RequestDto.Department;
 using Hospital.Models.Hospital.ResponseDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace Hospital.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DepartmentRequestDto departmentRequest)
+        public async Task<IActionResult> Post([FromBody] AddDepartmentRequestDto departmentRequest)
         {
             var departmentIsAvailable = await _departmentService.FindAsync(x=>x.Name == departmentRequest.Name);
             if (departmentIsAvailable != null) {
@@ -53,13 +54,20 @@ namespace Hospital.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] DepartmentRequestDto departmentRequest)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateDepartmentRequestDto departmentRequest)
         {
             var department = await _departmentService.GetAsync(id);
+            var departmentIsAvailable = await _departmentService.FindAsync(x => x.Name == departmentRequest.Name);
+
             if (department == null)
             {
-                return NotFound();
+                return BadRequest(new { Message = "Department not found." });
             }
+            else if (departmentIsAvailable != null)
+            {
+                return BadRequest(new { Message = "Department already exists." });
+            }
+
             department.Name = departmentRequest.Name;
             await _departmentService.SaveAsync();
             return Ok(department);
@@ -75,7 +83,7 @@ namespace Hospital.API.Controllers
             {
                 if (department!.Clinics?.Count > 0)
                 {
-                    return NotFound("There are clinics in the department. Remove them remove department.");
+                    return BadRequest(new { Message = "There are clinics in the department. Remove them remove department." });
                 }
                 _departmentService.Remove(department);
                 await _departmentService.SaveAsync();
