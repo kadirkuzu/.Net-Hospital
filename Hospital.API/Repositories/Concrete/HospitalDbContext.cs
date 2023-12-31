@@ -19,6 +19,7 @@ namespace Hospital.API.Repositories.Concrete
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Clinic>().HasData(SeedData.SeedClinics);
             modelBuilder.Entity<Department>().HasData(SeedData.SeedDepartments);
+            modelBuilder.Entity<WorkSchedule>().HasData(SeedData.SeedWorkSchedules);
         }
     }
 }

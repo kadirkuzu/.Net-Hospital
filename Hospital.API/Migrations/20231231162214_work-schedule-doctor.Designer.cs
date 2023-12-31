@@ -4,6 +4,7 @@ using Hospital.API.Repositories.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.API.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231231162214_work-schedule-doctor")]
+    partial class workscheduledoctor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Hospital.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DoctorWorkSchedule", b =>
-                {
-                    b.Property<Guid>("DoctorsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("WorkSchedulesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("DoctorsId", "WorkSchedulesId");
-
-                    b.HasIndex("WorkSchedulesId");
-
-                    b.ToTable("DoctorWorkSchedule");
-                });
 
             modelBuilder.Entity("Hospital.Models.Admin", b =>
                 {
@@ -164,98 +152,98 @@ namespace Hospital.API.Migrations
                         new
                         {
                             Id = new Guid("eb6b54e5-48be-48b4-8907-490ab13648c8"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8529),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3450),
                             DepartmentId = new Guid("b385ba05-80a5-4506-ae84-267ceac1d2c5"),
                             Name = "Kardiyoloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8529)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3451)
                         },
                         new
                         {
                             Id = new Guid("6b936aed-3d63-4b02-ace8-b7ab4b7edb98"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8914),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3834),
                             DepartmentId = new Guid("b385ba05-80a5-4506-ae84-267ceac1d2c5"),
                             Name = "Nöroloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8914)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3834)
                         },
                         new
                         {
                             Id = new Guid("5a97f4f6-49f5-4571-b6ed-d31ae749f879"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8916),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3837),
                             DepartmentId = new Guid("5c0f696d-f2df-4cb5-9c00-af62e6f150d9"),
                             Name = "Genel Cerrahi",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8916)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3837)
                         },
                         new
                         {
                             Id = new Guid("178f1526-a8dc-4664-96ae-78201d26ca73"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8918),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3839),
                             DepartmentId = new Guid("5c0f696d-f2df-4cb5-9c00-af62e6f150d9"),
                             Name = "Ortopedi",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8919)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3839)
                         },
                         new
                         {
                             Id = new Guid("038860b2-9030-42b8-aabe-0015dfd787d4"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8921),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3842),
                             DepartmentId = new Guid("66e37f12-b526-4ac5-ae2f-43575a1c7780"),
                             Name = "Göz Hastalıkları",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8921)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3842)
                         },
                         new
                         {
                             Id = new Guid("389af84b-47a3-47f3-b13d-0551ddad1261"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8924),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3848),
                             DepartmentId = new Guid("676db547-3439-40e1-b3d9-c11d554c585d"),
                             Name = "Kulak Burun Boğaz",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8924)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3849)
                         },
                         new
                         {
                             Id = new Guid("ae1609ef-a81f-4a38-b960-2557edfe5d89"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8929),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3854),
                             DepartmentId = new Guid("ac6aa076-16df-4a32-9f63-dc45333c3fba"),
                             Name = "Dermatoloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8929)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3854)
                         },
                         new
                         {
                             Id = new Guid("7073d4e7-08f3-40f3-88a2-b9b8526bd868"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8931),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3856),
                             DepartmentId = new Guid("9e5b98f5-392f-4f7c-ba6c-ea729936c7af"),
                             Name = "Radyoloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8932)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3856)
                         },
                         new
                         {
                             Id = new Guid("860534f3-f075-4135-ab73-e4770d7bd781"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8933),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3858),
                             DepartmentId = new Guid("e0c96494-819f-451e-b684-dff2aed17b02"),
                             Name = "Nükleer Tıp",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8934)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3858)
                         },
                         new
                         {
                             Id = new Guid("95930205-0c05-48df-9af8-9c6ccaa72fba"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8936),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3861),
                             DepartmentId = new Guid("3f677574-0f3a-468f-b1df-00b1a29f8282"),
                             Name = "Üroloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8936)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3861)
                         },
                         new
                         {
                             Id = new Guid("83698d36-f530-48a8-be2a-aaabb9cf0b10"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8938),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3863),
                             DepartmentId = new Guid("699d5895-2a50-4b52-ad05-6397ed824df6"),
                             Name = "Psikiyatri",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8938)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3863)
                         },
                         new
                         {
                             Id = new Guid("a76eafb3-b854-4f5c-9932-94b2d474d44a"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8940),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3864),
                             DepartmentId = new Guid("a90ad436-5091-43aa-b287-cf6bd03e47df"),
                             Name = "Çocuk Kardiyolojisi",
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(8940)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(3865)
                         });
                 });
 
@@ -283,72 +271,72 @@ namespace Hospital.API.Migrations
                         new
                         {
                             Id = new Guid("b385ba05-80a5-4506-ae84-267ceac1d2c5"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 703, DateTimeKind.Local).AddTicks(5267),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 503, DateTimeKind.Local).AddTicks(9650),
                             Name = "Dahiliye",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7440)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2369)
                         },
                         new
                         {
                             Id = new Guid("5c0f696d-f2df-4cb5-9c00-af62e6f150d9"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7949),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2853),
                             Name = "Cerrahi",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7950)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2854)
                         },
                         new
                         {
                             Id = new Guid("66e37f12-b526-4ac5-ae2f-43575a1c7780"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7953),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2857),
                             Name = "Göz Hastalıkları",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7954)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2857)
                         },
                         new
                         {
                             Id = new Guid("676db547-3439-40e1-b3d9-c11d554c585d"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7956),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2859),
                             Name = "Kulak Burun Boğaz",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7956)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2860)
                         },
                         new
                         {
                             Id = new Guid("ac6aa076-16df-4a32-9f63-dc45333c3fba"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7958),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2861),
                             Name = "Dermatoloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7958)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2862)
                         },
                         new
                         {
                             Id = new Guid("9e5b98f5-392f-4f7c-ba6c-ea729936c7af"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7963),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2867),
                             Name = "Radyoloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7964)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2867)
                         },
                         new
                         {
                             Id = new Guid("e0c96494-819f-451e-b684-dff2aed17b02"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7966),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2870),
                             Name = "Nükleer Tıp",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7967)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2870)
                         },
                         new
                         {
                             Id = new Guid("3f677574-0f3a-468f-b1df-00b1a29f8282"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7969),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2872),
                             Name = "Üroloji",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7969)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2872)
                         },
                         new
                         {
                             Id = new Guid("699d5895-2a50-4b52-ad05-6397ed824df6"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7978),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2882),
                             Name = "Psikiyatri",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7978)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2882)
                         },
                         new
                         {
                             Id = new Guid("a90ad436-5091-43aa-b287-cf6bd03e47df"),
-                            CreatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7981),
+                            CreatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2886),
                             Name = "Çocuk Sağlığı ve Hastalıkları",
-                            UpdatedDate = new DateTime(2023, 12, 31, 19, 23, 22, 704, DateTimeKind.Local).AddTicks(7982)
+                            UpdatedDate = new DateTime(2023, 12, 31, 19, 22, 14, 505, DateTimeKind.Local).AddTicks(2886)
                         });
                 });
 
@@ -435,6 +423,9 @@ namespace Hospital.API.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
 
@@ -446,143 +437,145 @@ namespace Hospital.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
                     b.ToTable("WorkSchedules");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("28a8033a-01bf-46ec-90f9-69005a6cbd76"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(9896),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4331),
                             Day = 1,
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 704, DateTimeKind.Utc).AddTicks(9896)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4331)
                         },
                         new
                         {
                             Id = new Guid("3a82bcfd-4b6a-4361-8736-eced0dea0ea4"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(658),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4796),
                             Day = 1,
                             EndTime = new TimeSpan(0, 18, 0, 0, 0),
                             StartTime = new TimeSpan(0, 9, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(659)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4797)
                         },
                         new
                         {
                             Id = new Guid("d9ac0b92-2653-4424-ab51-ebfc93ed53c0"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(665),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4802),
                             Day = 1,
                             EndTime = new TimeSpan(0, 19, 0, 0, 0),
                             StartTime = new TimeSpan(0, 10, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(665)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4802)
                         },
                         new
                         {
                             Id = new Guid("38160085-0064-4bd8-ac0f-f537e994c321"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(667),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4803),
                             Day = 2,
                             EndTime = new TimeSpan(0, 16, 30, 0, 0),
                             StartTime = new TimeSpan(0, 8, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(667)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4804)
                         },
                         new
                         {
                             Id = new Guid("d079adc8-cbfa-4ec5-8bd7-1fa525a500cf"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(669),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4834),
                             Day = 2,
                             EndTime = new TimeSpan(0, 17, 30, 0, 0),
                             StartTime = new TimeSpan(0, 9, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(669)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4834)
                         },
                         new
                         {
                             Id = new Guid("e86dd92d-6533-4648-96ef-ee3853088a77"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(733),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4837),
                             Day = 2,
                             EndTime = new TimeSpan(0, 18, 30, 0, 0),
                             StartTime = new TimeSpan(0, 10, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(733)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4837)
                         },
                         new
                         {
                             Id = new Guid("898bd61c-a0c9-4d3e-a766-91fd9334883e"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(735),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4839),
                             Day = 3,
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(735)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4839)
                         },
                         new
                         {
                             Id = new Guid("580c0024-b1ac-4be7-a253-bcf62f1d2e4e"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(737),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4841),
                             Day = 3,
                             EndTime = new TimeSpan(0, 18, 0, 0, 0),
                             StartTime = new TimeSpan(0, 9, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(737)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4841)
                         },
                         new
                         {
                             Id = new Guid("0c58466a-8559-4249-a83c-a3064d03f8ab"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(738),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4842),
                             Day = 3,
                             EndTime = new TimeSpan(0, 19, 0, 0, 0),
                             StartTime = new TimeSpan(0, 10, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(738)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4843)
                         },
                         new
                         {
                             Id = new Guid("94126296-7f82-47aa-bb30-9acd9f034764"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(741),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4845),
                             Day = 4,
                             EndTime = new TimeSpan(0, 16, 30, 0, 0),
                             StartTime = new TimeSpan(0, 8, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(741)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4845)
                         },
                         new
                         {
                             Id = new Guid("8e2d6ca3-9df7-45f1-b105-42165081a668"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(744),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4848),
                             Day = 4,
                             EndTime = new TimeSpan(0, 17, 30, 0, 0),
                             StartTime = new TimeSpan(0, 9, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(745)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4848)
                         },
                         new
                         {
                             Id = new Guid("dec376af-cbce-43f7-893c-eea954ecfc36"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(746),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4850),
                             Day = 4,
                             EndTime = new TimeSpan(0, 18, 30, 0, 0),
                             StartTime = new TimeSpan(0, 10, 30, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(746)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4850)
                         },
                         new
                         {
                             Id = new Guid("c0f50486-c9a3-41dd-968c-fdbccc643493"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(748),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4851),
                             Day = 5,
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(748)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4851)
                         },
                         new
                         {
                             Id = new Guid("73b146ed-f452-4dc9-809c-b0c99349b8f3"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(749),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4852),
                             Day = 5,
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             StartTime = new TimeSpan(0, 9, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(749)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4853)
                         },
                         new
                         {
                             Id = new Guid("55ccbd89-e20e-422f-b614-ba3ff67b2394"),
-                            CreatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(751),
+                            CreatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4854),
                             Day = 5,
                             EndTime = new TimeSpan(0, 18, 0, 0, 0),
                             StartTime = new TimeSpan(0, 10, 0, 0, 0),
-                            UpdatedDate = new DateTime(2023, 12, 31, 16, 23, 22, 705, DateTimeKind.Utc).AddTicks(751)
+                            UpdatedDate = new DateTime(2023, 12, 31, 16, 22, 14, 505, DateTimeKind.Utc).AddTicks(4854)
                         });
                 });
 
@@ -719,21 +712,6 @@ namespace Hospital.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DoctorWorkSchedule", b =>
-                {
-                    b.HasOne("Hospital.Models.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hospital.Models.WorkSchedule", null)
-                        .WithMany()
-                        .HasForeignKey("WorkSchedulesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Hospital.Models.Appointment", b =>
                 {
                     b.HasOne("Hospital.Models.Doctor", "Doctor")
@@ -773,6 +751,13 @@ namespace Hospital.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Clinic");
+                });
+
+            modelBuilder.Entity("Hospital.Models.WorkSchedule", b =>
+                {
+                    b.HasOne("Hospital.Models.Doctor", null)
+                        .WithMany("WorkSchedules")
+                        .HasForeignKey("DoctorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -834,6 +819,11 @@ namespace Hospital.API.Migrations
             modelBuilder.Entity("Hospital.Models.Department", b =>
                 {
                     b.Navigation("Clinics");
+                });
+
+            modelBuilder.Entity("Hospital.Models.Doctor", b =>
+                {
+                    b.Navigation("WorkSchedules");
                 });
 
             modelBuilder.Entity("Hospital.Models.Patient", b =>

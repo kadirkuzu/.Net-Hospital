@@ -33,5 +33,27 @@ namespace Hospital.API.Repositories.Concrete
         new ( Guid.Parse("83698d36-f530-48a8-be2a-aaabb9cf0b10"), "Psikiyatri", Guid.Parse("699d5895-2a50-4b52-ad05-6397ed824df6") ),
         new ( Guid.Parse("a76eafb3-b854-4f5c-9932-94b2d474d44a"), "Çocuk Kardiyolojisi", Guid.Parse("a90ad436-5091-43aa-b287-cf6bd03e47df") )
     };
+        public static List<WorkSchedule> SeedWorkSchedules = new List<WorkSchedule>
+    {
+        new ( Guid.Parse("28a8033a-01bf-46ec-90f9-69005a6cbd76"), DayOfWeek.Monday, new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0) ),
+        new ( Guid.Parse("3a82bcfd-4b6a-4361-8736-eced0dea0ea4"), DayOfWeek.Monday, new TimeSpan(9, 0, 0), new TimeSpan(18, 0, 0) ),
+        new ( Guid.Parse("d9ac0b92-2653-4424-ab51-ebfc93ed53c0"), DayOfWeek.Monday, new TimeSpan(10, 0, 0), new TimeSpan(19, 0, 0) ),
+
+        new ( Guid.Parse("38160085-0064-4bd8-ac0f-f537e994c321"), DayOfWeek.Tuesday, new TimeSpan(8, 30, 0), new TimeSpan(16, 30, 0) ),
+        new ( Guid.Parse("d079adc8-cbfa-4ec5-8bd7-1fa525a500cf"), DayOfWeek.Tuesday, new TimeSpan(9, 30, 0), new TimeSpan(17, 30, 0) ),
+        new ( Guid.Parse("e86dd92d-6533-4648-96ef-ee3853088a77"), DayOfWeek.Tuesday, new TimeSpan(10, 30, 0), new TimeSpan(18, 30, 0) ),
+
+        new ( Guid.Parse("898bd61c-a0c9-4d3e-a766-91fd9334883e"), DayOfWeek.Wednesday, new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0) ),
+        new ( Guid.Parse("580c0024-b1ac-4be7-a253-bcf62f1d2e4e"), DayOfWeek.Wednesday, new TimeSpan(9, 0, 0), new TimeSpan(18, 0, 0) ),
+        new ( Guid.Parse("0c58466a-8559-4249-a83c-a3064d03f8ab"), DayOfWeek.Wednesday, new TimeSpan(10, 0, 0), new TimeSpan(19, 0, 0) ),
+
+        new ( Guid.Parse("94126296-7f82-47aa-bb30-9acd9f034764"), DayOfWeek.Thursday, new TimeSpan(8, 30, 0), new TimeSpan(16, 30, 0) ),
+        new ( Guid.Parse("8e2d6ca3-9df7-45f1-b105-42165081a668"), DayOfWeek.Thursday, new TimeSpan(9, 30, 0), new TimeSpan(17, 30, 0) ),
+        new ( Guid.Parse("dec376af-cbce-43f7-893c-eea954ecfc36"), DayOfWeek.Thursday, new TimeSpan(10, 30, 0), new TimeSpan(18, 30, 0) ),
+
+        new ( Guid.Parse("c0f50486-c9a3-41dd-968c-fdbccc643493"), DayOfWeek.Friday, new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0) ),
+        new ( Guid.Parse("73b146ed-f452-4dc9-809c-b0c99349b8f3"), DayOfWeek.Friday, new TimeSpan(9, 0, 0), new TimeSpan(17, 0, 0) ),
+        new ( Guid.Parse("55ccbd89-e20e-422f-b614-ba3ff67b2394"), DayOfWeek.Friday, new TimeSpan(10, 0, 0), new TimeSpan(18, 0, 0) ),
+    };
     }
 }

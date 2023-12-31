@@ -6,6 +6,7 @@
         string SurName,
         string Email,
         string Phone,
+        IEnumerable<WorkSchedule> WorkSchedules ,
         Guid ClinicId
     );
 }
