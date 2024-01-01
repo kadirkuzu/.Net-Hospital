@@ -6,7 +6,7 @@ namespace Hospital.Models
     public class Appointment : BaseEntity
     {
         public Guid PatientId { get; set; }
-        public Patient? Patient { get; set; }
+        public HospitalUser? Patient { get; set; }
         public Guid DoctorId { get; set; }
         public Doctor? Doctor { get; set; }
         public DayOfWeek Day { get; set; }

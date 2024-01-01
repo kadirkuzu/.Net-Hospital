@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Hospital.Models
 {
-    public class Admin : IdentityUser
+    public class HospitalUser : IdentityUser
     {
     }
 }

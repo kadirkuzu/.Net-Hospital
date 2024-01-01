@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hospital.API.Repositories.Concrete
 {
-    public class HospitalDbContext : IdentityDbContext<Admin>
+    public class HospitalDbContext : IdentityDbContext<HospitalUser>
     {
         public HospitalDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Appointment> Appointments { get; set; }

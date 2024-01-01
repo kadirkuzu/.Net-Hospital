@@ -15,10 +15,10 @@ namespace Hospital.API.Controllers
     [ApiController]
     public class Accounts : ControllerBase
     {
-        private readonly UserManager<Admin> _userManager;
-        private readonly SignInManager<Admin> _signInManager;
+        private readonly UserManager<HospitalUser> _userManager;
+        private readonly SignInManager<HospitalUser> _signInManager;
 
-        public Accounts(UserManager<Admin> userManager, SignInManager<Admin> signInManager)
+        public Accounts(UserManager<HospitalUser> userManager, SignInManager<HospitalUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -28,7 +28,7 @@ namespace Hospital.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(AccountType accountType, [FromBody] RegisterRequestDto model)
         {
-            var user = new Admin { UserName = model.Email, Email = model.Email };
+            var user = new HospitalUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

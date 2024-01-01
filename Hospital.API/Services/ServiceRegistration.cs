@@ -11,7 +11,7 @@ namespace Hospital.API.Services
     {
         public static void AddHospitalServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<Admin, IdentityRole>()
+            services.AddIdentity<HospitalUser, IdentityRole>()
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
