@@ -1,5 +1,5 @@
 ﻿using Hospital.Models.Common;
-using System.Xml.Linq;
+using Hospital.Models.Hospital.RequestDto.WorkSchedules;
 
 namespace Hospital.Models
 {
@@ -16,6 +16,16 @@ namespace Hospital.Models
             StartTime = startTime;
             EndTime = endTime;
             Doctors = new List<Doctor>();
+        }
+        public WorkSchedule(AddWorkScheduleRequestDto request)
+        {
+            Day = request.Day;
+            StartTime = request.StartTime;
+            EndTime = request.EndTime;
+        }
+        public WorkSchedule()
+        {
+            
         }
     }
 }

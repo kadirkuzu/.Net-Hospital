@@ -95,7 +95,7 @@ namespace Hospital.API.Controllers
             {
                 if (clinic!.Doctors?.Count > 0)
                 {
-                    return BadRequest(new { Message = "There are doctors working in the clinic. Remove them remove clinic." });
+                    return BadRequest(new { Message = "There are doctors working in the clinic. Remove them to remove clinic." });
                 }
                 _clinicService.Remove(clinic);
                 await _clinicService.SaveAsync();

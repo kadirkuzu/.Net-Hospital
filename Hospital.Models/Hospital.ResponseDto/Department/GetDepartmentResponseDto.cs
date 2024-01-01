@@ -21,12 +21,12 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Doctor> Doctors { get; set; }
+        public int DoctorCount { get; set; }
         public DepartmentClinic(Clinic clinic)
         {
             Id = clinic.Id;
             Name = clinic.Name;
-            Doctors = clinic.Doctors ?? new List<Doctor>();
+            DoctorCount = clinic.Doctors != null ? clinic.Doctors.Count() : 0;
         }
         public DepartmentClinic()
         {

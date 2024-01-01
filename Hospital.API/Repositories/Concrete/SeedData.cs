@@ -4,8 +4,8 @@ namespace Hospital.API.Repositories.Concrete
 {
     public static class SeedData
     {
-        public static List<Department> SeedDepartments = new List<Department>
-    {
+        public static List<Department> SeedDepartments => new()
+        {
         new ( Guid.Parse("b385ba05-80a5-4506-ae84-267ceac1d2c5"), "Dahiliye" ),
         new ( Guid.Parse("5c0f696d-f2df-4cb5-9c00-af62e6f150d9"), "Cerrahi" ),
         new ( Guid.Parse("66e37f12-b526-4ac5-ae2f-43575a1c7780"), "Göz Hastalıkları" ),
@@ -18,8 +18,8 @@ namespace Hospital.API.Repositories.Concrete
         new ( Guid.Parse("a90ad436-5091-43aa-b287-cf6bd03e47df"), "Çocuk Sağlığı ve Hastalıkları" )
     };
 
-        public static List<Clinic> SeedClinics = new List<Clinic>
-    {
+        public static List<Clinic> SeedClinics => new()
+        {
         new ( Guid.Parse("eb6b54e5-48be-48b4-8907-490ab13648c8"), "Kardiyoloji",  Guid.Parse("b385ba05-80a5-4506-ae84-267ceac1d2c5") ),
         new ( Guid.Parse("6b936aed-3d63-4b02-ace8-b7ab4b7edb98"), "Nöroloji", Guid.Parse("b385ba05-80a5-4506-ae84-267ceac1d2c5") ),
         new ( Guid.Parse("5a97f4f6-49f5-4571-b6ed-d31ae749f879"), "Genel Cerrahi", Guid.Parse("5c0f696d-f2df-4cb5-9c00-af62e6f150d9") ),
@@ -33,8 +33,8 @@ namespace Hospital.API.Repositories.Concrete
         new ( Guid.Parse("83698d36-f530-48a8-be2a-aaabb9cf0b10"), "Psikiyatri", Guid.Parse("699d5895-2a50-4b52-ad05-6397ed824df6") ),
         new ( Guid.Parse("a76eafb3-b854-4f5c-9932-94b2d474d44a"), "Çocuk Kardiyolojisi", Guid.Parse("a90ad436-5091-43aa-b287-cf6bd03e47df") )
     };
-        public static List<WorkSchedule> SeedWorkSchedules = new List<WorkSchedule>
-    {
+        public static List<WorkSchedule> SeedWorkSchedules => new()
+        {
         new ( Guid.Parse("28a8033a-01bf-46ec-90f9-69005a6cbd76"), DayOfWeek.Monday, new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0) ),
         new ( Guid.Parse("3a82bcfd-4b6a-4361-8736-eced0dea0ea4"), DayOfWeek.Monday, new TimeSpan(9, 0, 0), new TimeSpan(18, 0, 0) ),
         new ( Guid.Parse("d9ac0b92-2653-4424-ab51-ebfc93ed53c0"), DayOfWeek.Monday, new TimeSpan(10, 0, 0), new TimeSpan(19, 0, 0) ),

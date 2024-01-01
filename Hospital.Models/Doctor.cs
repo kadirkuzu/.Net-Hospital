@@ -8,13 +8,14 @@ namespace Hospital.Models
         public Guid ClinicId { get; set; }
         public Clinic? Clinic { get; set; }
         public ICollection<WorkSchedule>? WorkSchedules { get; set; }
-        public Doctor(AddDoctorRequestDto request)
+        public Doctor(AddDoctorRequestDto request,List<WorkSchedule> workSchedules)
         {
             Name = request.Name;
-            Surname = request.SurName;
+            Surname = request.Surname;
             Email = request.Email;
             Phone = request.Phone;
             ClinicId = request.ClinicId;
+            WorkSchedules = workSchedules;
         }
         public Doctor() { }
     }

@@ -21,6 +21,7 @@ namespace Hospital.API.Services
             services.AddScoped<IClinicService,ClinicService>();
             services.AddScoped<IDepartmentService,DepartmentService>();
             services.AddScoped<IAppointmentService,AppointmentService>();
+            services.AddScoped<IWorkScheduleService,WorkScheduleService>();
 
         }
         public static async Task InitializeRolesAsync(IServiceProvider serviceProvider)

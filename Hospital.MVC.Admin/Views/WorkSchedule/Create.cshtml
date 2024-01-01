@@ -1,0 +1,43 @@
+﻿@using Hospital.Models.Hospital.RequestDto.WorkSchedules;
+@model AddWorkScheduleRequestDto;
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="main-card">
+            <form asp-action="SendCreate">
+                <div>
+                    <label asp-for="Day" class="form-label"></label>
+                    <select asp-for="Day" asp-items="Html.GetEnumSelectList<DayOfWeek>()" class="form-control">
+                        <option value="" selected disabled>Select Day</option>
+                    </select>
+                    <span asp-validation-for="Day" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="StartTime" class="form-label"></label>
+                    <input asp-for="StartTime" type="time" class="form-control" placeholder="Start Time">
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="EndTime" class="form-label"></label>
+                    <input asp-for="EndTime" type="time" class="form-control" placeholder="End Time">
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Add Work Schedule</button>
+                </div>
+            </form>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
