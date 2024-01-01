@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace Hospital.MVC.Admin.Controllers
 {
+    [HospitalAuthorize]
     public class WorkScheduleController : Controller
     {
         private readonly HttpClient http;

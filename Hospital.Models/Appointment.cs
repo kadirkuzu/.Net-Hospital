@@ -16,7 +16,7 @@ namespace Hospital.Models
         {
             
         }
-        public Appointment(AddAppointmentRequestDto request,Guid patientId)
+        public Appointment(AddAppointmentRequestDto request, Guid patientId)
         {
             PatientId = patientId;
             DoctorId = request.DoctorId ?? new Guid() ;

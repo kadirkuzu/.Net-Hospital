@@ -29,21 +29,21 @@ namespace Hospital.API.Controllers
         [HttpGet("")]
         public IEnumerable<GetAppointmentResponseDto> GetAll()
         {
-            return _appointmentService.GetAll().Include(x=>x.Doctor).Select(x => new GetAppointmentResponseDto(x));
+            return _appointmentService.GetAll().Include(x=>x.Doctor).Include(x=>x.Patient).Select(x => new GetAppointmentResponseDto(x));
         }
         [Authorize]
         [HttpGet("only-patient")]
         public IEnumerable<GetAppointmentResponseDto> GetAllPatients()
         {
             var patient = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _appointmentService.GetAll().Where(x=>x.PatientId == Guid.Parse(patient)).Include(x=>x.Doctor).Select(x => new GetAppointmentResponseDto(x));
+            return _appointmentService.GetAll().Where(x=>x.PatientId == Guid.Parse(patient)).Include(x=>x.Doctor).Include(x => x.Patient).Select(x => new GetAppointmentResponseDto(x));
         }
 
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var appointment = await _appointmentService.AsNoTracking().Include(x => x.Doctor).FirstOrDefaultAsync(data => data.Id == id);
+            var appointment = await _appointmentService.AsNoTracking().Include(x => x.Doctor).Include(x => x.Patient).FirstOrDefaultAsync(data => data.Id == id);
             return appointment == null ? NotFound() : Ok(new GetAppointmentResponseDto(appointment));
         }
 
