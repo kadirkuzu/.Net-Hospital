@@ -1,0 +1,78 @@
+﻿@using Hospital.Models.Hospital.RequestDto.Account;
+@model RegisterRequestDto;
+
+<style>
+    #password {
+        box-sizing: border-box;
+        background: #fff;
+    }
+
+    .password-button {
+        position: absolute;
+        background: #fff;
+        color: #6c757d;
+        right: 10px;
+        top: 6px;
+        cursor: pointer;
+    }
+
+</style>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="main-card">
+            <form asp-action="SendRegister">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email or Username</label>
+                    <input asp-for="Email" class="form-control" placeholder="Email or Username">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="w-100 position-relative">
+                        <input asp-for="Password" class="form-control" type="password" id="password" placeholder="Password" />
+                        <div class="password-button" onclick="togglePasswordVisibility('password')" id="passwordButton">
+                            show
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <div class="w-100 position-relative">
+                        <input asp-for="ConfirmPassword" class="form-control" type="password" id="confirmPassword" placeholder="Confirm Password" />
+                        <div class="password-button" onclick="togglePasswordVisibility('confirmPassword')" id="confirmPasswordButton">
+                            show
+                        </div>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
+                <div class="text-end mt-3">
+                    Already have an account?  <a class="router-text" asp-action="login">Login</a>
+                </div>
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger mt-3" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function togglePasswordVisibility(type) {
+            var passwordInput = document.getElementById(type);
+            passwordInput.type = passwordInput.type === 'text' ? 'password' : 'text';
+            var passwordButton = document.getElementById(type + 'Button');
+            passwordButton.innerHTML = passwordButton.innerHTML == 'hide' ? 'show' : 'hide';
+        }
+    </script>
+}

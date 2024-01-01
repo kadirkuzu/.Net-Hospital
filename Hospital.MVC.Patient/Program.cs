@@ -1,7 +1,15 @@
+using Hospital.MVC.Patient.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+#region
+    builder.Services.AddSingleton<LanguageService>();
+#endregion
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("httpClient", c => c.BaseAddress = new Uri("https://localhost:7071/api/"));
 
 var app = builder.Build();
 
@@ -22,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Appointment}/{action=Index}/{id?}");
 
 app.Run();

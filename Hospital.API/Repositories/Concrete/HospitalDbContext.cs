@@ -11,7 +11,6 @@ namespace Hospital.API.Repositories.Concrete
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,0 +1,81 @@
+﻿@using Hospital.Models.Hospital.RequestDto.Appointment;
+@model AddAppointmentRequestDto
+
+@{
+    ViewBag.Title = "Create Appointment";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="main-card">
+            <form asp-action="Create" asp-controller="Appointment" method="post">
+                <div class="mb-3">
+                    <label asp-for="DepartmentId" class="form-label">Department :</label>
+                    <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control" onchange="this.form.submit();">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+
+                @if (Model.DepartmentId != null)
+                {
+                    <div class="mb-3">
+                        <label asp-for="ClinicId" class="form-label">Clinic :</label>
+                        <select asp-for="ClinicId" asp-items="ViewBag.Clinics" class="form-control" onchange="this.form.submit();">
+                            <option value="">Select</option>
+                        </select>
+                        <input type="hidden" asp-for="DepartmentId" />
+                    </div>
+                }
+
+                @if (Model.ClinicId != null)
+                {
+                    <div class="mb-3">
+                        <label asp-for="DoctorId" class="form-label">Doctor :</label>
+                        <select asp-for="DoctorId" asp-items="ViewBag.Doctors" class="form-control" onchange="this.form.submit();">
+                            <option value="">Select</option>
+                        </select>
+                        <input type="hidden" asp-for="DepartmentId" />
+                        <input type="hidden" asp-for="ClinicId" />
+                    </div>
+                }
+
+                @if (Model.DoctorId != null)
+                {
+                    <div class="mb-3">
+                        <label asp-for="DoctorId" class="form-label">Day:</label>
+                        <select asp-for="Day" asp-items="ViewBag.Days" class="form-control" onchange="this.form.submit();">
+                            <option value="">Select</option>
+                        </select>
+                        <input type="hidden" asp-for="DepartmentId" />
+                        <input type="hidden" asp-for="ClinicId" />
+                        <input type="hidden" asp-for="DoctorId" />
+                    </div>
+                }
+
+                @if (Model.Day != null)
+                {
+                    <div class="mb-3">
+                        <label asp-for="Time" class="form-label">Time:</label>
+                        <select asp-for="Time" asp-items="ViewBag.Times" class="form-control">
+                            <option value="">Select</option>
+                        </select>
+                        <input type="hidden" asp-for="DepartmentId" />
+                        <input type="hidden" asp-for="ClinicId" />
+                        <input type="hidden" asp-for="DoctorId" />
+                        <input type="hidden" asp-for="Day" />
+                    </div>
+                }
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Create Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
