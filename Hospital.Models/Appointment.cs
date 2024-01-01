@@ -5,7 +5,7 @@ namespace Hospital.Models
 {
     public class Appointment : BaseEntity
     {
-        public Guid PatientId { get; set; }
+        public string PatientId { get; set; }
         public HospitalUser? Patient { get; set; }
         public Guid DoctorId { get; set; }
         public Doctor? Doctor { get; set; }
@@ -16,7 +16,7 @@ namespace Hospital.Models
         {
             
         }
-        public Appointment(AddAppointmentRequestDto request, Guid patientId)
+        public Appointment(AddAppointmentRequestDto request, string patientId)
         {
             PatientId = patientId;
             DoctorId = request.DoctorId ?? new Guid() ;

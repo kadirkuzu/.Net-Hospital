@@ -81,7 +81,7 @@ namespace Hospital.MVC.Patient.Controllers
                 var department = departments.FirstOrDefault(x => x.Id == request.DepartmentId);
 
                 ViewBag.Clinics = new SelectList(department.Clinics, "Id", "Name");
-                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "Name");
+                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "FullName");
                 return View(new AddAppointmentRequestDto() { DepartmentId = request.DepartmentId , ClinicId = request.ClinicId });
             }
             else if (request.Day == null)
@@ -99,7 +99,7 @@ namespace Hospital.MVC.Patient.Controllers
 
                 ViewBag.Days = new SelectList(wsDay);
                 ViewBag.Clinics = new SelectList(department.Clinics, "Id", "Name");
-                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "Name");
+                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "FullName");
                 return View(new AddAppointmentRequestDto() { DepartmentId = request.DepartmentId, ClinicId = request.ClinicId , DoctorId = request.DoctorId });
             }
             else if (request.Time == null)
@@ -126,7 +126,7 @@ namespace Hospital.MVC.Patient.Controllers
                 ViewBag.Days = new SelectList(wsDays);
                 ViewBag.Times = new SelectList(wsTimes);
                 ViewBag.Clinics = new SelectList(department.Clinics, "Id", "Name");
-                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "Name");
+                ViewBag.Doctors = new SelectList(clinic.Doctors, "Id", "FullName");
                 return View(new AddAppointmentRequestDto() { DepartmentId = request.DepartmentId, ClinicId = request.ClinicId, DoctorId = request.DoctorId , Day = request.Day });
             }
             else return RedirectToAction("SendCreate",request);

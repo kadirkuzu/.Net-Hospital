@@ -36,7 +36,7 @@ namespace Hospital.API.Controllers
         public IEnumerable<GetAppointmentResponseDto> GetAllPatients()
         {
             var patient = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _appointmentService.GetAll().Where(x=>x.PatientId == Guid.Parse(patient)).Include(x=>x.Doctor).Include(x => x.Patient).Select(x => new GetAppointmentResponseDto(x));
+            return _appointmentService.GetAll().Where(x=>x.PatientId == patient).Include(x=>x.Doctor).Include(x => x.Patient).Select(x => new GetAppointmentResponseDto(x));
         }
 
         [Authorize]
@@ -61,7 +61,7 @@ namespace Hospital.API.Controllers
             {
                 return NotFound("Doctor is not found");
             }
-            var appointment = new Appointment(request,new Guid(patient));
+            var appointment = new Appointment(request,patient);
             await _appointmentService.AddAsync(appointment);
             await _appointmentService.SaveAsync();
             return Ok(appointment);
