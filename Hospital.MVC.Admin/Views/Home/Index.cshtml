@@ -32,57 +32,48 @@
         <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <div class="main-card">
                 <div class="fw-bold fs-5">
-                    Companies
+                    Departments / Clinics
                 </div>
                 <div>
-                    From <span routerLink="/add-company" class="router-text">here</span> you can add your companies.
+                    From <a asp-controller="department" asp-action="create" class="router-text">here</a> you can add your departments.
                 </div>
                 <div class="mt-1">
-                    And you can see your companies and do other operations from
+                    And you can see your departments and do other operations from
                 </div>
                 <div class="mt-1">
-                    <div class="router-text">Airport Managements</div>
-                    <div class="router-text">Manufecturers</div>
-                    <div class="router-text">Plane Owners</div>
-                    <div class="router-text">Ground Services</div>
+                    <a asp-controller="department" asp-action="" class="router-text">Departments</a>
                 </div>
             </div>
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <div class="main-card">
                 <div class="fw-bold fs-5">
-                    Employees
+                    Work Schedules
                 </div>
                 <div>
-                    From <span routerLink="/add-employee" class="router-text">here</span> you can add your employees.
+                    From <a asp-controller="workSchedule" asp-action="create" class="router-text">here</a> you can add your work schedules.
                 </div>
                 <div class="mt-1">
-                    And you can see your employees and do other operations from
+                    And you can see your work schedules and do other operations from
                 </div>
                 <div class="mt-1">
-                    <div class="router-text">Pilots</div>
-                    <div class="router-text">Cabin Personels</div>
-                    <div class="router-text">Cabin Crews</div>
-                    <div class="router-text">Ground Services Chiefs</div>
-                    <div class="router-text">Ground Services Personels</div>
-                    <div class="router-text">Ground Services Crews</div>
+                    <a asp-controller="workSchedule" asp-action="" class="router-text">Work Schedules</a>
                 </div>
             </div>
         </div>
         <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <div class="main-card">
                 <div class="fw-bold fs-5">
-                    Customers
+                    Patients
                 </div>
                 <div>
-                    From <span routerLink="/customers" class="router-text">here</span> you can see your customers.
+                    From <a asp-controller="patients" asp-action="create" class="router-text">here</a> you can add your patients.
                 </div>
                 <div class="mt-1">
-                    And you can add your customers , add trips and do other operations from
+                    And you can add your patients , create appointments from
                 </div>
                 <div class="mt-1">
-                    <div class="router-text">Add Customer</div>
-                    <div class="router-text">Trips</div>
+                    <a asp-controller="patient" asp-action="" class="router-text">Patients</a>
                 </div>
             </div>
         </div>
